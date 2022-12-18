@@ -4,16 +4,22 @@ import axios from "../../data/axios";
 import YouTube from "react-youtube";
 import { play, group } from "../../assets";
 import "./Details.css";
+import { useStateValue } from "../../context/StateProvider";
+import { actionType } from "../../context/reducer";
+import { addDoc, getDocs } from "firebase/firestore";
+import { colRef, q } from "../../data/firebase";
+import { IoCheckmarkSharp, IoAddSharp } from "react-icons/io5";
+
 const Details = () => {
+  const [{ watchList, user }, dispatch] = useStateValue();
   const { id, category } = useParams();
-  console.log(id, category);
   const api_key = "011a19f7aef4b91e754cc83d49c0bcd9";
   const base_url = "https://image.tmdb.org/t/p/original/";
-
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const [youtubeId, setyoutubeId] = useState([]);
   const [trailr, settrailer] = useState(true);
+  const [watchlist, setwatchList] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -25,12 +31,29 @@ const Details = () => {
       );
 
       setData(reqeust.data);
-      setLoading(false);
       setyoutubeId(
         trailer.data.lenght < 1
           ? trailer.data.results[1]["key"]
           : trailer.data.results[0]["key"]
       );
+      const test = getDocs(q);
+      test
+        .then((test) => {
+          test.docs.map((doc) => {
+            watchlist.push({ ...doc.data(), idFirebase: doc.id });
+          });
+        })
+        .then(() => {
+          const filter = watchlist.filter((item) => item.userId === user.uid);
+          setwatchList(filter);
+          const findList = watchlist.find((i) => i.id === data.id);
+
+          setwatchList(findList);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
     fetchData();
   }, [id]);
@@ -43,6 +66,23 @@ const Details = () => {
     },
   };
 
+  const addWatchList = (item) => {
+    const find = watchList.find((i) => i.id === item.id);
+    if (!find) {
+      addDoc(colRef, {
+        ...item,
+        userId: user.uid,
+      });
+
+      dispatch({
+        type: actionType.SET_WATCHLIST,
+        watchList: item,
+      });
+    }
+  };
+
+  const find = watchList.find((i) => i.id === data.id);
+  console.log(watchlist);
   return (
     <div className="details">
       <div className={`${loading ? "loader_page" : "loader_page_head"}`}>
@@ -60,8 +100,19 @@ const Details = () => {
           <img src={play} alt="" /> <span>play</span>{" "}
         </button>
 
-        <button className="plus">
-          <span>+</span>
+        <button
+          className={`plus ${find ? "activ" : ""}`}
+          onClick={() => addWatchList(data)}
+        >
+          {watchlist.length ? (
+            <span>
+              <IoCheckmarkSharp style={{ color: "green" }} className="icon" />
+            </span>
+          ) : (
+            <span>
+              <IoAddSharp />
+            </span>
+          )}
         </button>
         <button className="groub">
           <img src={group} alt="" />

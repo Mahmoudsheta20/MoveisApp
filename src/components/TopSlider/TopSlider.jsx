@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "./TopSlider.css";
 import axios from "../../data/axios";
 import { Link } from "react-router-dom";
-const base_url = "https://image.tmdb.org/t/p/original/";
+import { base_url } from "../../data/requests";
 const TopSlider = ({ categroy }) => {
   var settings = {
     dots: true,

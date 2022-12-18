@@ -6,6 +6,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid #eeeeee08;
 }
 
 @media (max-width: 992px) {
@@ -29,7 +30,7 @@
   align-items: center;
 }
 
-a {
+.nav a {
   display: flex;
   align-items: center;
   padding: 0 12px;

@@ -7,9 +7,10 @@ import axios from "../../data/axios";
 import { Link } from "react-router-dom";
 
 const base_url = "https://image.tmdb.org/t/p/original/";
-const Movies = ({ titel, fetchUrl, isLargeRow }) => {
+const Movies = ({ titel, fetchUrl }) => {
   const [movise, setmovise] = useState([]);
   const [state, setstate] = useState(true);
+  const [isLargeRow, setisLargeRow] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -21,6 +22,10 @@ const Movies = ({ titel, fetchUrl, isLargeRow }) => {
       return requst;
     }
     fetchData();
+
+    if (titel === "Trending") {
+      setisLargeRow(true);
+    }
   }, []);
 
   var settings = {

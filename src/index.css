@@ -8,3 +8,32 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.slider {
+  padding-top: 20px;
+}
+
+.slider ul li button::before {
+  font-size: 10px;
+  color: rgb(150, 158, 171);
+}
+
+.slider li.slick-active button::before {
+  color: white;
+}
+
+button {
+  z-index: 1;
+}
+
+/* .slick-list {
+  overflow: visible;
+  outline: none;
+} */
+.slider_wrappr img:hover {
+  border: 4px solid #eee;
+}
+
+/* .slick-prev:before,
+.slick-next:before {
+  display: none;
+} */

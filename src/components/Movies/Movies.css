@@ -44,17 +44,6 @@
   width: fit-content;
 }
 
-.row_name p {
-  text-align: center;
-  margin: 20px;
-}
-
-.row h2 {
-  margin-bottom: 40px;
-  text-align: center;
-  margin-top: 10px;
-}
-
 .slick-prev:before,
 .slick-next:before {
   display: block;

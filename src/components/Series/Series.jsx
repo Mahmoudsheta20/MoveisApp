@@ -8,9 +8,10 @@ import axios from "../../data/axios";
 import { Link } from "react-router-dom";
 
 const base_url = "https://image.tmdb.org/t/p/original/";
-const Series = ({ titel, fetchUrl, isLargeRow }) => {
+const Series = ({ titel, fetchUrl }) => {
   const [movise, setmovise] = useState([]);
   const [state, setstate] = useState(true);
+  const [isLargeRow, setisLargeRow] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -22,6 +23,10 @@ const Series = ({ titel, fetchUrl, isLargeRow }) => {
       return requst;
     }
     fetchData();
+
+    if (titel === "Trending") {
+      setisLargeRow(true);
+    }
   }, []);
 
   var settings = {
@@ -70,7 +75,7 @@ const Series = ({ titel, fetchUrl, isLargeRow }) => {
         <Slider {...settings}>
           {movise.map((movie) => (
             <div key={movie.id} className="row_name">
-              <Link to={`/details/movie/${movie.id}`}>
+              <Link to={`/details/tv/${movie.id}`}>
                 <img
                   className={`row_postr ${isLargeRow && "row_posterlarg"}`}
                   src={`${base_url}${

@@ -9,22 +9,15 @@ const MainContainer = () => {
       <div className="home">
         <TopSlider categroy={requests.fetchTopRated} />
         <Viwer />
+        <h2 className="home__heading">Movies</h2>
 
         {requestsMovies.map((item) => (
-          <Movies
-            key={item.title}
-            isLargeRow
-            titel={item.title}
-            fetchUrl={item.URL}
-          />
+          <Movies key={item.title} titel={item.title} fetchUrl={item.URL} />
         ))}
+        <h2 className="home__heading">Series</h2>
+
         {requestsSeries.map((item) => (
-          <Series
-            key={item.title}
-            isLargeRow
-            titel={item.title}
-            fetchUrl={item.URL}
-          />
+          <Series key={item.title} titel={item.title} fetchUrl={item.URL} />
         ))}
       </div>
     </div>

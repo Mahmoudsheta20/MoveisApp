@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
-
+import { getFirestore, query, collection } from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyCJmXhdAuOaKhcpZWuJxnCqvpzP21VdUO4",
   authDomain: "desny-plus.firebaseapp.com",
@@ -15,4 +15,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const Auth = getAuth(app);
 const provider = new GoogleAuthProvider();
-export { app, Auth, provider };
+const db = getFirestore(app);
+const colRef = collection(db, "watchList");
+const q = query(colRef);
+
+export { app, Auth, provider, q, colRef, db };
