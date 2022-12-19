@@ -62,6 +62,8 @@ const Movies = ({ titel, fetchUrl }) => {
       },
     ],
   };
+  console.log(movise);
+
   return (
     <>
       <div className={`${state ? "loader_page" : "loader_page_head"}`}>
