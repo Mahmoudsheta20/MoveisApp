@@ -8,13 +8,27 @@ import { Link } from "react-router-dom";
 import { base_url } from "../../data/requests";
 const TopSlider = ({ categroy }) => {
   var settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 1000,
 
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
+    responsive: [
+      {
+        breakpoint: 600,
+        settings: {
+          dots: false,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          dots: false,
+        },
+      },
+    ],
   };
   const [movise, setmovise] = useState([]);
   const [state, setstate] = useState(true);

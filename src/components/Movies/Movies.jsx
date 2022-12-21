@@ -15,7 +15,6 @@ const Movies = ({ titel, fetchUrl }) => {
   useEffect(() => {
     async function fetchData() {
       const requst = await axios.get(fetchUrl);
-      console.log(requst);
       setmovise(requst.data.results);
       setstate(false);
 
@@ -62,7 +61,6 @@ const Movies = ({ titel, fetchUrl }) => {
       },
     ],
   };
-  console.log(movise);
 
   return (
     <>

@@ -21,6 +21,7 @@ import {
   IoHome,
   IoAdd,
   IoEllipsisVertical,
+  IoSearch,
 } from "react-icons/io5";
 const Navbar = () => {
   const [{ user }, dispatch] = useStateValue();
@@ -96,17 +97,14 @@ const Navbar = () => {
 
         <div className="nav__user">
           <img src={user ? user.photoURL : avtar} alt="userPhoto" />
-
-          <p onClick={menu ? () => setMenu(false) : () => setMenu(true)}>
-            <IoCaretDownOutline />
-          </p>
+          {user && (
+            <p onClick={() => setMenu(!menu)}>
+              <IoCaretDownOutline />
+            </p>
+          )}
         </div>
-        <div className={`${menu ? "mnue_nav" : "mnue_hed_nav"}`}>
-          {!user ? (
-            <div onClick={login} className="sigin_mnue">
-              login
-            </div>
-          ) : (
+        {menu && (
+          <div className={`mnue_nav`}>
             <div className="nav_user">
               <img src={user ? user.photoURL : avtar} alt="userPhoto" />
               <p>{user.displayName}</p>
@@ -114,47 +112,41 @@ const Navbar = () => {
                 sign out
               </p>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
       <div className="nav_small">
-        <div className="nav_menu">
-          <>
-            <Link to={"movie"}>
-              <IoFilm />
-            </Link>
-            <Link to={"/series"}>
-              <IoTv />
-            </Link>
+        <Link to={"movie"}>
+          <IoFilm />
+        </Link>
+        <Link to={"/series"}>
+          <IoTv />
+        </Link>
 
-            <Link className=" nav_home" to={"home"}>
-              <IoHome />
-            </Link>
-            <Link to={"/watchlist"}>
-              <IoAdd />
-            </Link>
-            <Link onClick={menu ? () => setMenu(false) : () => setMenu(true)}>
-              <IoEllipsisVertical />
-            </Link>
-          </>
-
-          <div className={`${menu ? "mnue" : "mnue_hed"}`}>
-            {!user ? (
-              <div onClick={login} className="sigin_mnue">
-                login
-              </div>
-            ) : (
-              <div className="nav_user">
-                <img src={user ? user.photoURL : avtar} alt="userPhoto" />
-                <p>{user.displayName}</p>
-                <p onClick={logOut} className="signout">
-                  sign out
-                </p>
-              </div>
-            )}
+        <Link className=" nav_home" to={"/"}>
+          <IoHome />
+        </Link>
+        <Link to={"/search"}>
+          <IoSearch />
+        </Link>
+        <Link to={"/watchlist"}>
+          <IoAdd />
+        </Link>
+        <Link onClick={() => setMenu(!menu)}>
+          <IoEllipsisVertical />
+        </Link>
+        {menu && (
+          <div className={`mnue`}>
+            <div className="nav_user">
+              <img src={user ? user.photoURL : avtar} alt="userPhoto" />
+              <p>{user.displayName}</p>
+              <p onClick={logOut} className="signout">
+                sign out
+              </p>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </>
   );

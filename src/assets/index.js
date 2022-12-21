@@ -18,3 +18,6 @@ export { default as nationalvideo } from "./videos/1564676296-national-geographi
 export { default as pixsarvideo } from "./videos/1564676714-pixar.mp4";
 export { default as play } from "./images/play-icon-black.png";
 export { default as group } from "./images/group-icon.png";
+export { default as logoOne } from "./images/cta-logo-two.png";
+export { default as logTwo } from "./images/cta-logo-one.svg";
+export { default as login } from "./images/login-background.jpg";

@@ -10,16 +10,14 @@ import { Link } from "react-router-dom";
 const base_url = "https://image.tmdb.org/t/p/original/";
 const Series = ({ titel, fetchUrl }) => {
   const [movise, setmovise] = useState([]);
-  const [state, setstate] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [isLargeRow, setisLargeRow] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
       const requst = await axios.get(fetchUrl);
-      console.log(requst);
       setmovise(requst.data.results);
-      setstate(false);
-
+      setLoading(false);
       return requst;
     }
     fetchData();
@@ -65,9 +63,11 @@ const Series = ({ titel, fetchUrl }) => {
   };
   return (
     <>
-      <div className={`${state ? "loader_page" : "loader_page_head"}`}>
-        <div className={`${state ? "loader" : "loader_head"}`}></div>
-      </div>
+      {loading && (
+        <div className={`loader_page`}>
+          <div className={`loader`}></div>
+        </div>
+      )}
 
       <div className="row">
         <h2>{titel}</h2>

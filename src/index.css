@@ -37,3 +37,9 @@ button {
 .slick-next:before {
   display: none;
 } */
+/* 
+#root {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+} */

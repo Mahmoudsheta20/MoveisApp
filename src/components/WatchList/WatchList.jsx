@@ -46,45 +46,51 @@ const WatchList = () => {
 
   console.log(watchList);
   return (
-    <div className="watchList">
-      {loading ? (
-        <div className="watchList__Loading">
-          <div className="lds-ripple">
-            <div></div>
-            <div></div>
-          </div>
-        </div>
-      ) : (
-        <>
-          {state.map((item) => (
-            <div key={item.id} className="row_name">
-              <div className="watchList__image">
-                <div className="watchlist__overlay">
-                  <div className="icons">
-                    <p onClick={() => deleteData(item.idFirebase)}>
-                      <IoTrash />
-                    </p>
-                    <Link to={`/details/movie/${item.id}`}>
-                      <p>
-                        <IoAlert />
-                      </p>
-                    </Link>
-                  </div>
-                </div>
-
-                <img
-                  className={`row__image ${isLargeRow && "row_imagelarg"}`}
-                  src={`${base_url}${
-                    isLargeRow ? item.poster_path : item.backdrop_path
-                  }`}
-                  alt={item.name}
-                  key={item.id}
-                />
-              </div>
+    <div className="watchList__main">
+      <h2>watchList</h2>
+      <div className="watchList">
+        {loading ? (
+          <div className="watchList__Loading">
+            <div className="lds-ripple">
+              <div></div>
+              <div></div>
             </div>
-          ))}
-        </>
-      )}
+          </div>
+        ) : (
+          <>
+            {state.map((item) => (
+              <div key={item.id} className="row_name">
+                <div className="watchList__image">
+                  <div className="watchlist__overlay">
+                    <div className="icons">
+                      <div
+                        className="icons__p"
+                        onClick={() => deleteData(item.idFirebase)}
+                      >
+                        <IoTrash />
+                      </div>
+                      <Link to={`/details/movie/${item.id}`}>
+                        <div className="icons__p">
+                          <IoAlert />
+                        </div>
+                      </Link>
+                    </div>
+                  </div>
+
+                  <img
+                    className={`row__image ${isLargeRow && "row_imagelarg"}`}
+                    src={`${base_url}${
+                      isLargeRow ? item.poster_path : item.backdrop_path
+                    }`}
+                    alt={item.name}
+                    key={item.id}
+                  />
+                </div>
+              </div>
+            ))}
+          </>
+        )}
+      </div>
     </div>
   );
 };

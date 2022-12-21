@@ -47,8 +47,10 @@
 .row h2 {
   text-align: center;
   padding: 50px 0;
-  color: #eeeeeed9;
-  font-size: 30px;
+  color: #ffffff8f;
+  font-size: 32px;
+  text-transform: capitalize;
+  font-weight: 500;
 }
 
 .slick-prev:before,
@@ -57,7 +59,7 @@
 }
 .home__heading {
   text-align: center;
-  padding: 50px 0;
-  font-size: 45px;
+  padding: 5px 0;
+  font-size: 49px;
   color: #7f7f7f52;
 }

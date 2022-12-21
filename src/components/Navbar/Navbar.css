@@ -1,5 +1,5 @@
 .nav {
-  height: 70px;
+  height: 60px;
   background: #090b13;
   color: white;
   padding: 0 35px;
@@ -13,6 +13,7 @@
   right: 0;
   top: 0;
   width: 100%;
+  gap: 40px;
 }
 
 @media (max-width: 992px) {
@@ -22,24 +23,27 @@
 }
 
 .nav_logo {
-  text-transform: none;
-  font-size: 20px;
-  font-weight: 600;
-  color: #9b6cf7;
+  -webkit-text-fill-color: transparent;
+  background: -webkit-linear-gradient(
+    63deg,
+    rgba(49, 59, 172, 0.922),
+    rgba(158, 173, 195, 0.761)
+  );
+  -webkit-background-clip: text;
+  font-size: 24px;
+  text-transform: uppercase;
 }
 
 .nav_menu {
   display: flex;
-  flex: 1;
-  cursor: pointer;
-  margin-left: 25px;
+  flex: 1 1;
   align-items: center;
+  gap: 30px;
 }
 
 .nav a {
   display: flex;
-  align-items: center;
-  padding: 0 12px;
+  gap: 2px;
   align-items: center;
 }
 
@@ -74,8 +78,8 @@
 }
 
 .nav__user img {
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   object-fit: contain;
   border-radius: 50%;
 }
@@ -93,7 +97,10 @@
   align-items: center;
   gap: 12px;
 }
-
+.nav__user svg {
+  font-size: 17px;
+  cursor: pointer;
+}
 .nav_user {
   text-align: center;
   align-items: center;
@@ -121,38 +128,30 @@
 
 .nav_small {
   position: fixed;
-  bottom: 0;
-  width: 100%;
-  z-index: 4;
+  bottom: 10px;
+  width: 95%;
+  z-index: 5;
   right: 0;
   background: black;
-  left: 0;
-  height: 70px;
+  left: 2.5%;
+  height: 60px;
   align-items: center;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  border-radius: 16px;
+  padding: 10px 20px;
+}
+
+@media (max-width: 767px) {
+  .nav_small svg {
+    font-size: 18px;
+  }
 }
 
 @media (min-width: 992px) {
   .nav_small {
     display: none;
   }
-}
-
-.nav_home {
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  transition: 0.5s;
-}
-
-.nav_home:hover {
-  border-radius: 50%;
-  background-color: #040714;
-  width: 50px;
-  margin-bottom: 61px;
-  height: 50px;
-  box-shadow: 0px 19px 0px 3px #11131c;
 }
 
 svg {
@@ -224,9 +223,6 @@ svg {
 }
 
 .signout:hover {
-  border: 3px solid #fff;
+  border: 3px solid rgb(171, 171, 171);
   background-color: #11131c;
-}
-
-@media (min-width: 767px) {
 }

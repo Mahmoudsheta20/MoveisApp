@@ -1,11 +1,21 @@
 .watchList {
-  padding: 70px 50px;
+  padding: 100px 50px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 25px;
   flex-wrap: wrap;
-  height: 70vh;
+  height: 100vh;
+}
+
+.watchList__main {
+  padding: 100px 0;
+  text-align: center;
+}
+.watchList__main > h2 {
+  font-size: 40px;
+  text-transform: capitalize;
+  color: #4c4c4ce8;
 }
 
 .row_name {
@@ -31,7 +41,7 @@
   justify-content: space-evenly;
   width: 100%;
 }
-.icons p {
+.icons__p {
   background-color: #0000008c;
   width: 35px;
   height: 35px;
@@ -43,10 +53,10 @@
   font-size: 22px;
   cursor: pointer;
 }
-.icons p svg {
+.icons__p svg {
   font-size: 20px;
 }
-.icons p:hover {
+.icons__p:hover {
   scale: 1.1;
 }
 
