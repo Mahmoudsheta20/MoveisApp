@@ -1,6 +1,7 @@
 export const actionType = {
   SET_USER: "SET_USER",
   SET_WATCHLIST: "SET_WATCHLIST",
+  SET_ALL_WATCHLIST: "SET_ALL_WATCHLIST",
 };
 
 const reducer = (state, action) => {
@@ -18,6 +19,11 @@ const reducer = (state, action) => {
         ...state,
 
         watchList: [...state.watchList, action.watchList],
+      };
+    case actionType.SET_ALL_WATCHLIST:
+      return {
+        ...state,
+        watchListAll: action.watchListAll,
       };
 
     default:

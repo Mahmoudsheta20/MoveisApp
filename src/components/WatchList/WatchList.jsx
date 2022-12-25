@@ -3,37 +3,39 @@ import { useStateValue } from "../../context/StateProvider";
 import { Link } from "react-router-dom";
 import "./WatchList.css";
 import { IoAlert, IoTrash } from "react-icons/io5";
-import { deleteDoc, doc, getDocs } from "firebase/firestore";
-import { db, q } from "../../data/firebase";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "../../data/firebase";
 import { base_url } from "../../data/requests";
+import { getWatchList } from "../../data/firebaseFunction";
+import { actionType } from "../../context/reducer";
 const WatchList = () => {
   const [loading, setLoading] = useState(true);
-  const [{ user, watchList }, dispatch] = useStateValue();
+  const [{ user, watchList, watchListAll }, dispatch] = useStateValue();
   const isLargeRow = true;
   const [state, setstate] = useState([]);
 
-  const handelFilter = () => {
-    const test = getDocs(q);
-    test
-      .then((test) => {
-        test.docs.map((doc) => {
-          state.push({ ...doc.data(), idFirebase: doc.id });
-        });
-      })
+  useEffect(() => {
+    getWatchList()
+      .then((data) =>
+        data.map((doc) => state.push({ ...doc.data(), idFirebase: doc.id }))
+      )
       .then(() => {
         const filter = state.filter((item) => item.userId === user.uid);
         setstate(filter);
         setLoading(false);
+
+        dispatch({
+          type: actionType.SET_ALL_WATCHLIST,
+          watchListAll: filter,
+        });
       })
       .catch((error) => {
         console.log(error);
         setLoading(true);
       });
-  };
+  }, [user]);
 
-  useEffect(() => {
-    handelFilter();
-  }, []);
+  console.log(watchListAll);
 
   const deleteData = (item) => {
     const filter = state.filter((data) => data.idFirebase !== item);

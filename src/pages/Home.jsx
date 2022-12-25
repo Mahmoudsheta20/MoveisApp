@@ -1,9 +1,9 @@
 import React from "react";
 import requests, { requestsMovies, requestsSeries } from "../data/requests";
-import { Movies, Series, TopSlider, Viwer } from "./index";
+import { Movies, Series, Viwer, TopSlider } from "../components";
 import "./index.css";
 
-const MainContainer = () => {
+const Home = () => {
   return (
     <div>
       <div className="home">
@@ -24,4 +24,4 @@ const MainContainer = () => {
   );
 };
 
-export default MainContainer;
+export default Home;

@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import { IoSearch, IoClose } from "react-icons/io5";
 import "./Search.css";
-import { api_key, base_url } from "../../data/requests";
-import axios from "../../data/axios";
+import { base_url } from "../../data/requests";
 import { Link } from "react-router-dom";
+import { getDataSearch } from "../../data/requestsFunction";
 
 const Search = () => {
   const [search, setsearch] = useState("");
@@ -14,26 +11,22 @@ const Search = () => {
   const [loading, setLoading] = useState(true);
   const isLargeRow = true;
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const reqeust = await axios.get(
-          `/search/multi?api_key=${api_key}&language=en-US&query=${search}&page=1&include_adult=false`
-        );
-        console.log(reqeust.status);
-        setData(reqeust.data.results);
+    getDataSearch(search)
+      .then((data) => {
+        setData(data);
         setLoading(false);
-      } catch (error) {
+      })
+      .catch((error) => {
+        setData(false);
         console.log(error.messages);
         setLoading(true);
-      }
-    }
-    fetchData();
+      });
 
     if (!search) {
       setData([]);
     }
   }, [search]);
-  console.log(data);
+
   return (
     <div className="search">
       <div className="serach__input">
@@ -54,7 +47,7 @@ const Search = () => {
         )}
       </div>
       <div className="search__main">
-        {data.length ? (
+        {data ? (
           <div className="search__result">
             {loading ? (
               <div className="watchList__Loading">

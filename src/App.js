@@ -1,33 +1,29 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 import {
   Details,
-  MainContainer,
   Navbar,
   Search,
   Series,
   Watchlist,
+  Movies,
 } from "./components";
 import { requestsMovies, requestsSeries } from "./data/requests";
 import { useStateValue } from "./context/StateProvider";
-
 import "./App.css";
-import { Movies } from "./components/index";
-import { NotFound } from "./pages";
-import Login from "./pages/Login";
+import { Home, NotFound, Login } from "./pages";
 function App() {
-  const location = useLocation();
-  // console.log(location);
-  const [{ user }, dispatch] = useStateValue();
+  const [{ user }] = useStateValue();
 
   return (
     <div>
       <Navbar />
-
+      <Toaster position="top-right" />
       {user ? (
         <Routes>
           <Route path="*" element={<NotFound />} />
 
-          <Route path="/" element={<MainContainer />} />
+          <Route path="/" element={<Home />} />
           <Route path="/details/:category/:id" element={<Details />} />
           <Route
             path="/movie"

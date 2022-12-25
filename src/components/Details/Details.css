@@ -107,8 +107,8 @@
   align-items: center;
   justify-content: center;
 }
-.plus .icon {
-  color: green;
+.plus svg {
+  color: #ffcebe;
 }
 .groub {
   background-color: rgb(0 0 0 / 60%);
@@ -239,7 +239,6 @@ iframe {
   .details {
     flex-direction: column;
     min-height: 100vh;
-    height: auto;
   }
 
   .episodes__deatils {

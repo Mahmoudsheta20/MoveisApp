@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import YouTube from "react-youtube";
 import { play, group } from "../../assets";
@@ -7,53 +8,65 @@ import { useStateValue } from "../../context/StateProvider";
 import { actionType } from "../../context/reducer";
 import { addDoc } from "firebase/firestore";
 import { colRef } from "../../data/firebase";
-import { IoCheckmarkSharp, IoAddSharp, IoClose } from "react-icons/io5";
+import { IoAddSharp, IoClose, IoCheckmarkDone } from "react-icons/io5";
 import { base_url } from "../../data/requests";
 import {
   fetchDataSeasons,
   fetchDataDatails,
   getDataTrailer,
 } from "../../data/requestsFunction";
+import { getWatchList } from "../../data/firebaseFunction";
+
 const Details = () => {
-  const [{ watchList, user }, dispatch] = useStateValue();
+  const [{ user }, dispatch] = useStateValue();
   const { id, category } = useParams();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [youtubeId, setyoutubeId] = useState([]);
   const [trailer, setTrailer] = useState(false);
-  const [watchlist, setwatchList] = useState([]);
   const [seasons, setseasons] = useState([]);
-  const [seasonNum, setseasonNum] = useState(null);
+  const [refresh, setrefresh] = useState(false);
+  const state = [];
+  const [watchlist, setwatchlist] = useState({});
+  const isLargeRow = false;
+
   useEffect(() => {
     fetchDataDatails(category, id)
       .then((data) => {
         setData([data]);
-        setLoading(false);
       })
       .catch((error) => console.log(error));
 
-    if (category === "tv") {
-      fetchDataSeasons(id, seasonNum).then((data) => setseasons([data]));
-    }
-  }, [seasonNum, id]);
+    getWatchList()
+      .then((data) =>
+        data.map((doc) => state.push({ ...doc.data(), idFirebase: doc.id }))
+      )
+      .then(() => {
+        const filter = state.filter((item) => item.userId === user.uid);
+        const find = filter.find((item) => item.id == id);
+
+        setwatchlist(find);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [id, category, user, refresh]);
+
+  console.log(state);
 
   const addWatchList = (item) => {
-    const find = watchList.find((i) => i.id === item.id);
-    if (!find) {
+    if (!watchlist) {
       addDoc(colRef, {
         ...item,
         userId: user.uid,
-      });
-
-      dispatch({
-        type: actionType.SET_WATCHLIST,
-        watchList: item,
-      });
+      }).catch((error) => console.log(error));
+      setrefresh(true);
+      toast.success(
+        `${item?.title || item?.name || item?.original_name} Add to WatchList`
+      );
     }
   };
-
-  const find = watchList.find((i) => i.id === data.id);
-  const isLargeRow = false;
 
   const getTrailer = async () => {
     getDataTrailer(category, id)
@@ -64,6 +77,14 @@ const Details = () => {
         setTrailer(true);
       })
       .catch((error) => console.log(error));
+  };
+
+  const getAddSesson = (seasonNum) => {
+    if (category === "tv") {
+      fetchDataSeasons(id, seasonNum)
+        .then((data) => setseasons([data]))
+        .catch((error) => console.log(error));
+    }
   };
 
   return (
@@ -104,15 +125,12 @@ const Details = () => {
               </button>
 
               <button
-                className={`plus ${find ? "activ" : ""}`}
-                onClick={() => addWatchList(data)}
+                className={`plus activ`}
+                onClick={() => addWatchList(item)}
               >
-                {watchlist.length ? (
+                {watchlist ? (
                   <span>
-                    <IoCheckmarkSharp
-                      style={{ color: "green" }}
-                      className="icon"
-                    />
+                    <IoCheckmarkDone />
                   </span>
                 ) : (
                   <span>
@@ -138,7 +156,7 @@ const Details = () => {
                       <div
                         className="deatils__hover"
                         key={item.id}
-                        onClick={() => setseasonNum(item.season_number)}
+                        onClick={() => getAddSesson(item.season_number)}
                       >
                         <img
                           className={`row_postr ${
@@ -182,30 +200,27 @@ const Details = () => {
           </>
         ))}
       </div>
-      {seasonNum !== null ? (
-        <>
-          {seasons.length && (
-            <div className="episodes__deatils">
-              {seasons.map((item) =>
-                item.episodes.map((doc) => (
-                  <div key={doc.id} className="episodes__image">
-                    <img
-                      className={`row_postr ${isLargeRow && "row_posterlarg"}`}
-                      src={`${base_url}${doc.still_path}`}
-                      alt={doc.name}
-                      key={doc.id}
-                    />
 
-                    <p>{doc.name}</p>
-                  </div>
-                ))
-              )}
-            </div>
-          )}
-        </>
-      ) : (
-        <></>
-      )}
+      <>
+        {seasons && (
+          <div className="episodes__deatils">
+            {seasons.map((item) =>
+              item.episodes.map((doc) => (
+                <div key={doc.id} className="episodes__image">
+                  <img
+                    className={`row_postr ${isLargeRow && "row_posterlarg"}`}
+                    src={`${base_url}${doc.still_path}`}
+                    alt={doc.name}
+                    key={doc.id}
+                  />
+
+                  <p>{doc.name}</p>
+                </div>
+              ))
+            )}
+          </div>
+        )}
+      </>
     </div>
   );
 };

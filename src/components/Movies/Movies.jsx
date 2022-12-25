@@ -67,33 +67,34 @@ const Movies = ({ titel, fetchUrl }) => {
       <div className={`${state ? "loader_page" : "loader_page_head"}`}>
         <div className={`${state ? "loader" : "loader_head"}`}></div>
       </div>
+      {movise && (
+        <div className="row">
+          <h2>{titel}</h2>
 
-      <div className="row">
-        <h2>{titel}</h2>
+          <Slider {...settings}>
+            {movise.map((movie) => (
+              <div key={movie.id} className="row_name">
+                <Link to={`/details/movie/${movie.id}`}>
+                  <img
+                    className={`row_postr ${isLargeRow && "row_posterlarg"}`}
+                    src={`${base_url}${
+                      isLargeRow ? movie.poster_path : movie.backdrop_path
+                    }`}
+                    alt={movie.name}
+                    key={movie.id}
+                  />
+                </Link>
 
-        <Slider {...settings}>
-          {movise.map((movie) => (
-            <div key={movie.id} className="row_name">
-              <Link to={`/details/movie/${movie.id}`}>
-                <img
-                  className={`row_postr ${isLargeRow && "row_posterlarg"}`}
-                  src={`${base_url}${
-                    isLargeRow ? movie.poster_path : movie.backdrop_path
-                  }`}
-                  alt={movie.name}
-                  key={movie.id}
-                />
-              </Link>
-
-              {isLargeRow ? (
-                <p></p>
-              ) : (
-                <p>{movie?.title || movie?.name || movie?.original_name}</p>
-              )}
-            </div>
-          ))}
-        </Slider>
-      </div>
+                {isLargeRow ? (
+                  <p></p>
+                ) : (
+                  <p>{movie?.title || movie?.name || movie?.original_name}</p>
+                )}
+              </div>
+            ))}
+          </Slider>
+        </div>
+      )}
     </>
   );
 };

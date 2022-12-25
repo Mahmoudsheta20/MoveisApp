@@ -35,3 +35,13 @@ export const getDataTrailer = async (category, id) => {
     console.log(error);
   }
 };
+export const getDataSearch = async (search) => {
+  try {
+    const reqeust = await axios.get(
+      `/search/multi?api_key=${api_key}&language=en-US&query=${search}&page=1&include_adult=false`
+    );
+    return reqeust.data.results;
+  } catch (error) {
+    console.log(error);
+  }
+};

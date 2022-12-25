@@ -55,6 +55,7 @@
   font-size: 13px;
   letter-spacing: 1.42px;
   position: relative;
+  color: #eee;
 }
 
 .nav_menu span::after {

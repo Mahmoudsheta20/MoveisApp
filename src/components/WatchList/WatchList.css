@@ -2,7 +2,7 @@
   padding: 100px 50px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   gap: 25px;
   flex-wrap: wrap;
   height: 100vh;
@@ -52,9 +52,11 @@
   transition: 0.3s;
   font-size: 22px;
   cursor: pointer;
+  border: 2px solid #eeeeee24;
 }
 .icons__p svg {
   font-size: 20px;
+  color: #eee;
 }
 .icons__p:hover {
   scale: 1.1;
